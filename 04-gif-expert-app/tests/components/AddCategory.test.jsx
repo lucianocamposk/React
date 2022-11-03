@@ -5,7 +5,8 @@ describe('Pruebas en <AddCategory />', () => {
    
     test('debe de cambiar el valor de la caja de texto', () => {
 
-        render( <AddCategory />)
+        render( <AddCategory />);
+
         const input = screen.getByRole('textbox');
 
         fireEvent.input( input, { target: { value: 'Saitama'}});
@@ -34,4 +35,20 @@ describe('Pruebas en <AddCategory />', () => {
 
 
     })
- });
+
+    test('no debe de llamar a onNewCategory si el input esta vacío', () => {
+
+        const onNewCategory = jest.fn();
+
+        render( <AddCategory onNewCategory={ onNewCategory } /> );
+
+        const form = screen.getByRole('form');
+        fireEvent.submit ( form );
+
+        expect(jest.fn(AddCategory)).not.toHaveBeenCalled();
+
+
+
+    })
+
+});
